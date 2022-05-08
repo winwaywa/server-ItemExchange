@@ -17,7 +17,7 @@ const register = async (req, res) => {
         const user = await User.create({ ...req.body });
         const token = user.createJWT();
         res.status(StatusCodes.CREATED).json({
-            user: { username: user.username },
+            user: { username: user.username, avatar: user.avatar },
             token,
         });
     } catch (err) {
@@ -41,7 +41,10 @@ const login = async (req, res) => {
             throw new UnauthenticatedError('Tài khoản hoặc mật khẩu không đúng!');
         }
         const token = user.createJWT();
-        res.status(StatusCodes.OK).json({ user: { username: user.username }, token });
+        res.status(StatusCodes.OK).json({
+            user: { username: user.username, avatar: user.avatar },
+            token,
+        });
     } catch (err) {
         res.status(err.statusCode).json({ message: err.message });
     }

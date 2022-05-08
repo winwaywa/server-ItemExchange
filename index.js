@@ -18,9 +18,13 @@ const connectDB = require('./src/db/connect');
 //router
 const authRouter = require('./src/routes/auth');
 const userRouter = require('./src/routes/user');
+const categoryRouter = require('./src/routes/category');
+const productRouter = require('./src/routes/product');
 const authenticateUser = require('./src/middleware/authentication');
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/products', productRouter);
 app.use('/api/v1/user', authenticateUser, userRouter);
 
 ////////////////// run
