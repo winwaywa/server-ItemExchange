@@ -12,8 +12,8 @@ const ProductSchema = new mongoose.Schema(
         images_url: { type: String, default: '' },
         status: {
             type: String,
-            enum: ['new', 'requesting', 'trading', 'completed'],
-            default: 'new',
+            enum: ['disable', 'enable', 'exchanging', 'completed'],
+            default: 'disable',
         },
         category_id: {
             type: mongoose.Types.ObjectId,

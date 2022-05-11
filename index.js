@@ -30,12 +30,14 @@ const authRouter = require('./src/routes/auth');
 const userRouter = require('./src/routes/user');
 const categoryRouter = require('./src/routes/category');
 const productRouter = require('./src/routes/product');
+const transactionRouter = require('./src/routes/transaction');
 // const authenticateUser = require('./src/middleware/authentication');
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/transactions', transactionRouter);
 
 ////////////////// run
 const port = process.env.PORT || 5000;
