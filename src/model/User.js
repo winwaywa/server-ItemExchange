@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     full_name: { type: String, default: '' },
     phone: { type: String, default: '' },
     address: { type: String, default: '' },
+    province: { type: String, default: '' },
 });
 
 //mã hoá pass trước khi lưu

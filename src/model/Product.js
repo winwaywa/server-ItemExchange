@@ -8,11 +8,12 @@ const ProductSchema = new mongoose.Schema(
             maxlength: 100,
         },
         describe: { type: String, required: [true, 'Cần cung cấp mô tả sản phẩm'] },
+        percent_new: { type: Number, default: 100 },
         price: { type: String, default: '' },
         images_url: { type: String, default: '' },
         status: {
             type: String,
-            enum: ['disable', 'enable', 'exchanging', 'completed'],
+            enum: ['disable', 'enable', 'exchanging', 'exchanged'],
             default: 'disable',
         },
         category_id: {

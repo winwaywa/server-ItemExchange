@@ -7,7 +7,7 @@ const { NotFoundError, BadRequestError } = require('../errors');
 //Lấy tất cả sp có trạng thái new và requesting
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find({ status: 'disable' });
+        const products = await Product.find(req.query);
         res.status(StatusCodes.OK).json({ products });
     } catch (err) {
         console.log(err);
@@ -17,7 +17,7 @@ const getAllProducts = async (req, res) => {
 
 const getProductsByUser = async (req, res) => {
     try {
-        const products = await Product.find({ createdBy: req.user.userId });
+        const products = await Product.find({ ...req.query, createdBy: req.user.userId });
         res.status(StatusCodes.OK).json({ products });
     } catch (err) {
         console.log(err);
