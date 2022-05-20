@@ -1,14 +1,57 @@
 const path = require('path');
 
 const Product = require('../model/Product');
+const User = require('../model/User');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError, BadRequestError } = require('../errors');
 
 //Lấy tất cả sp có trạng thái new và requesting
 const getAllProducts = async (req, res) => {
+    console.log(req.query);
+
+    //sort
+    const { _sort } = req.query;
+    const [field, condition] = _sort.split(':');
+    //pagination
+    const { _page, _limit } = req.query;
+    const start = (_page - 1) * _limit;
+    //price
+    const price_gte = req.query.price_gte || 0;
+    const price_lte = req.query.price_lte || 999999999999;
+    // percent new
+    const percent_new_gte = req.query.percent_new_gte || 0;
+    const percent_new_lte = req.query.percent_new_lte || 100;
+    //search
+    const _search = req.query._search || '';
+
+    //province
+    const { province } = req.query;
+    var userIdList = [];
+    if (province) {
+        const users = await User.find().where({ province });
+        userIdList = users.map((user) => user._id);
+    } else {
+        const users = await User.find();
+        userIdList = users.map((user) => user._id);
+    }
+
     try {
-        const products = await Product.find(req.query);
-        res.status(StatusCodes.OK).json({ products });
+        const products = await Product.find()
+            .where({
+                ...req.query,
+                price: { $gte: price_gte, $lte: price_lte },
+                percent_new: { $gte: percent_new_gte, $lte: percent_new_lte },
+                product_name: { $regex: _search },
+                createdBy: userIdList,
+            })
+            .sort({ [field]: condition })
+            .skip(start)
+            .limit(_limit);
+
+        const total = await Product.find().where(req.query).countDocuments();
+        const pagination = { page: Number.parseInt(_page), limit: Number.parseInt(_limit), total };
+
+        res.status(StatusCodes.OK).json({ products, pagination });
     } catch (err) {
         console.log(err);
         res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
