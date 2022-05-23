@@ -5,7 +5,7 @@ const { NotFoundError, BadRequestError } = require('../errors');
 //Lấy tất cả transaction của sản phẩm được gửi yêu cầu
 const getTransactionsWithCondition = async (req, res) => {
     try {
-        const transactions = await Transaction.find(req.query);
+        const transactions = await Transaction.find(req.query).sort({ updatedAt: 'ASC' });
         if (!transactions) {
             throw new NotFoundError(`No transactions found!`);
         }

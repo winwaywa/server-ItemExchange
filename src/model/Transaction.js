@@ -12,7 +12,7 @@ const TransactionSchema = new mongoose.Schema(
         exchange_value: String,
         status: {
             type: String,
-            enum: ['pending', 'cancelled', 'approved'],
+            enum: ['pending', 'cancelled', 'approved', 'completed'],
             default: 'pending',
         },
     },

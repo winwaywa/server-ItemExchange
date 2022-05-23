@@ -3,6 +3,19 @@ const User = require('../model/User');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError, BadRequestError } = require('../errors');
 
+//Get tất cả user
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        if (!users) {
+            throw new NotFoundError(`Không tìm thấy người dùng nào!`);
+        }
+        res.status(StatusCodes.OK).json({ users });
+    } catch (err) {
+        res.status(err.statusCode).json({ message: err.message });
+    }
+};
+
 //Get thông tin người đã đăng nhập thành công
 const getUser = async (req, res) => {
     try {
@@ -17,13 +30,14 @@ const getUser = async (req, res) => {
     }
 };
 
-//Get thông tin người dùng theo id của họ
-const getUserById = async (req, res) => {
+//Get thông tin người dùng theo username của họ
+const getUserByUserName = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findById({ _id: id });
+        const { username } = req.params;
+        console.log(username);
+        const user = await User.findOne(req.params);
         if (!user) {
-            throw new NotFoundError(`Không tìm thấy người dùng có username ${userName}`);
+            throw new NotFoundError(`Không tìm thấy người dùng có username ${username}`);
         }
         res.status(StatusCodes.OK).json({ user });
     } catch (err) {
@@ -68,4 +82,4 @@ const updateUser = async (req, res) => {
     }
 };
 
-module.exports = { getUser, updateUser, getUserById };
+module.exports = { getAllUsers, getUser, updateUser, getUserByUserName };

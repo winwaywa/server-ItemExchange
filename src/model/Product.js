@@ -21,11 +21,7 @@ const ProductSchema = new mongoose.Schema(
             ref: 'Category',
             required: [true, 'Please provide category id'],
         },
-        createdBy: {
-            type: mongoose.Types.ObjectId,
-            ref: 'User',
-            required: [true, 'Please provide user'],
-        },
+        createdBy: { type: String, default: '' },
     },
     { timestamps: true }
 );

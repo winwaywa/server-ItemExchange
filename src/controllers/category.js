@@ -10,5 +10,9 @@ const getCategory = async (req, res) => {
     const category = await Category.findOne({ _id: id });
     res.status(StatusCodes.OK).json({ category });
 };
+const createCategory = async (req, res) => {
+    const category = await Category.create(req.body);
+    res.status(StatusCodes.OK).json({ category });
+};
 
-module.exports = { getAllCategories, getCategory };
+module.exports = { getAllCategories, getCategory, createCategory };

@@ -26,13 +26,13 @@ const getAllProducts = async (req, res) => {
 
     //province
     const { province } = req.query;
-    var userIdList = [];
+    var userNameList = [];
     if (province) {
         const users = await User.find().where({ province });
-        userIdList = users.map((user) => user._id);
+        userNameList = users.map((user) => user.username);
     } else {
         const users = await User.find();
-        userIdList = users.map((user) => user._id);
+        userNameList = users.map((user) => user.username);
     }
 
     try {
@@ -42,7 +42,7 @@ const getAllProducts = async (req, res) => {
                 price: { $gte: price_gte, $lte: price_lte },
                 percent_new: { $gte: percent_new_gte, $lte: percent_new_lte },
                 product_name: { $regex: _search },
-                createdBy: userIdList,
+                createdBy: userNameList,
             })
             .sort({ [field]: condition })
             .skip(start)
@@ -60,7 +60,7 @@ const getAllProducts = async (req, res) => {
 
 const getProductsByUser = async (req, res) => {
     try {
-        const products = await Product.find({ ...req.query, createdBy: req.user.userId });
+        const products = await Product.find({ ...req.query, createdBy: req.user.userName });
         res.status(StatusCodes.OK).json({ products });
     } catch (err) {
         console.log(err);
@@ -81,6 +81,7 @@ const getProduct = async (req, res) => {
         res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
     }
 };
+
 const createProduct = async (req, res) => {
     try {
         if (req.files) {
@@ -107,7 +108,7 @@ const createProduct = async (req, res) => {
             req.body.images_url = images_url.join(',');
         }
 
-        req.body.createdBy = req.user.userId;
+        req.body.createdBy = req.user.userName;
         const product = await Product.create(req.body);
         res.status(StatusCodes.CREATED).json({ product });
     } catch (err) {
@@ -118,10 +119,9 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const {
-            user: { userId },
             params: { id },
         } = req;
-        const product = await Product.findByIdAndUpdate({ _id: id, createdBy: userId }, req.body, {
+        const product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
             new: true,
             runValidators: true,
         });

@@ -6,13 +6,14 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Please provide name'],
-        maxlength: 12,
+        maxlength: 50,
         minlength: 3,
         unique: true,
     },
     password: {
         type: String,
         required: [true, 'Please provide password'],
+        default: '123456',
         minlength: 6,
     },
     avatar: {
@@ -21,6 +22,15 @@ const UserSchema = new mongoose.Schema({
     },
     full_name: { type: String, default: '' },
     phone: { type: String, default: '' },
+    email: {
+        type: String,
+        default: '',
+        match: [
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Please provide a valid email',
+        ],
+        // unique: true,
+    },
     address: { type: String, default: '' },
     province: { type: String, default: '' },
 });
