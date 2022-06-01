@@ -65,13 +65,14 @@ const loginWithGoogle = async (req, res) => {
     const userExist = await User.findOne({ username });
     if (!userExist) {
         //register
-        const user = await User.create({ ...req.body });
+        const user = await User.create({ username, email, full_name, avatar });
         const token = user.createJWT();
         res.status(StatusCodes.CREATED).json({
             user: { username: user.username, avatar: user.avatar },
             token,
         });
     }
+
     //login
     const token = userExist.createJWT();
     res.status(StatusCodes.OK).json({

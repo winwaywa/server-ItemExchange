@@ -15,6 +15,16 @@ const TransactionSchema = new mongoose.Schema(
             enum: ['pending', 'cancelled', 'approved', 'completed'],
             default: 'pending',
         },
+        transaction_method_of_request_recipient: {
+            type: String,
+            enum: ['null', 'free', 'intermediary'],
+            default: 'null',
+        },
+        transaction_method_of_request_sender: {
+            type: String,
+            enum: ['null', 'free', 'intermediary'],
+            default: 'null',
+        },
     },
     { timestamps: true }
 );

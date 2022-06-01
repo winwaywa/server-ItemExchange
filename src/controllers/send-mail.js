@@ -16,6 +16,7 @@ const sendMailNotification = async (req, res) => {
     try {
         // Lấy thông tin gửi lên từ client qua body
         const { email, subject, content } = req.body;
+        console.log({ email, subject, content });
         if (!email || !subject || !content)
             throw new Error('Please provide email, subject and content!');
         /**
@@ -41,7 +42,7 @@ const sendMailNotification = async (req, res) => {
         const mailOptions = {
             to: email, // Gửi đến ai?
             subject: subject, // Tiêu đề email
-            html: `<h3>${content}</h3>`, // Nội dung email
+            html: content, // Nội dung email
         };
         // Gọi hành động gửi email
         await transport.sendMail(mailOptions);

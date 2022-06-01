@@ -6,7 +6,7 @@ const { NotFoundError, BadRequestError } = require('../errors');
 //Get tất cả user
 const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().sort({ updatedAt: 'DESC' });
         if (!users) {
             throw new NotFoundError(`Không tìm thấy người dùng nào!`);
         }

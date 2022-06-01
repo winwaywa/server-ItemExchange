@@ -8,10 +8,10 @@ const { NotFoundError, BadRequestError } = require('../errors');
 //Lấy tất cả sp có trạng thái new và requesting
 const getAllProducts = async (req, res) => {
     console.log(req.query);
-
     //sort
     const { _sort } = req.query;
     const [field, condition] = _sort.split(':');
+
     //pagination
     const { _page, _limit } = req.query;
     const start = (_page - 1) * _limit;
@@ -35,6 +35,12 @@ const getAllProducts = async (req, res) => {
         userNameList = users.map((user) => user.username);
     }
 
+    //lay product theo username
+    const { username } = req.query;
+    if (username) {
+        userNameList = username;
+    }
+
     try {
         const products = await Product.find()
             .where({
@@ -47,7 +53,6 @@ const getAllProducts = async (req, res) => {
             .sort({ [field]: condition })
             .skip(start)
             .limit(_limit);
-
         const total = await Product.find().where(req.query).countDocuments();
         const pagination = { page: Number.parseInt(_page), limit: Number.parseInt(_limit), total };
 
@@ -137,10 +142,13 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const {
-            user: { userId },
+            user: { userId, userName },
             params: { id },
         } = req;
-        const product = await Product.findByIdAndRemove({ _id: id, createdBy: userId });
+        console.log(userName);
+        const product = await Product.findByIdAndRemove({ _id: id });
+        console.log(product);
+
         if (!product) {
             throw new NotFoundError(`No product with id ${id}`);
         }

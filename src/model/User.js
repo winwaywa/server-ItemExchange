@@ -33,6 +33,11 @@ const UserSchema = new mongoose.Schema({
     },
     address: { type: String, default: '' },
     province: { type: String, default: '' },
+    role: {
+        type: String,
+        enum: ['admin', 'member'],
+        default: 'member',
+    },
 });
 
 //mã hoá pass trước khi lưu

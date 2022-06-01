@@ -2,13 +2,17 @@ require('dotenv').config({ path: './config.env' });
 require('express-async-errors');
 
 const path = require('path');
-const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-
-const app = express();
-
 const fileUpload = require('express-fileupload');
+
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+
+//chat
+const handleChat = require('./src/controllers/chat');
+handleChat(server);
 
 //middleware
 app.use(cors());
@@ -47,7 +51,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
-        app.listen(port, () => console.log(`Server is listening on port ${port}...`));
+        server.listen(port, () => console.log(`Server is listening on port ${port}...`));
     } catch (error) {
         console.log(error);
     }
