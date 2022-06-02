@@ -36,6 +36,7 @@ const categoryRouter = require('./src/routes/category');
 const productRouter = require('./src/routes/product');
 const transactionRouter = require('./src/routes/transaction');
 const sendMailRouter = require('./src/routes/send-mail');
+const notificationRouter = require('./src/routes/notification');
 // const authenticateUser = require('./src/middleware/authentication');
 
 app.use('/api/v1/auth', authRouter);
@@ -44,6 +45,7 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/transactions', transactionRouter);
 app.use('/api/v1/mail', sendMailRouter);
+app.use('/api/v1/notifications', notificationRouter);
 
 ////////////////// run
 const port = process.env.PORT || 5000;
