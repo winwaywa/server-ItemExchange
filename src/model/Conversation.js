@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const { ref } = require('mongoose');
 
 const ConversationSchema = new mongoose.Schema(
     {
-        creator: String,
-        member: String,
+        members: { type: [String] },
+        isOpen: { type: Boolean, default: true },
     },
     { timestamps: true }
 );

@@ -9,7 +9,7 @@ const MessageSchema = new mongoose.Schema(
         },
         user: String,
         text: String,
-        seen: Boolean,
+        seen: { type: Boolean, default: false },
     },
     { timestamps: true }
 );

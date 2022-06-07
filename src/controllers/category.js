@@ -14,5 +14,9 @@ const createCategory = async (req, res) => {
     const category = await Category.create(req.body);
     res.status(StatusCodes.OK).json({ category });
 };
+const deleteCategory = async (req, res) => {
+    const category = await Category.findByIdAndRemove(req.params.id);
+    res.status(StatusCodes.OK).json({ category });
+};
 
-module.exports = { getAllCategories, getCategory, createCategory };
+module.exports = { getAllCategories, getCategory, createCategory, deleteCategory };

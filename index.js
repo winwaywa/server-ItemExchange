@@ -9,10 +9,15 @@ const fileUpload = require('express-fileupload');
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+    },
+});
 
 //chat
 const handleChat = require('./src/controllers/chat');
-handleChat(server);
+handleChat(io);
 
 //middleware
 app.use(cors());
@@ -37,6 +42,8 @@ const productRouter = require('./src/routes/product');
 const transactionRouter = require('./src/routes/transaction');
 const sendMailRouter = require('./src/routes/send-mail');
 const notificationRouter = require('./src/routes/notification');
+const conversationRouter = require('./src/routes/conversation');
+const messageRouter = require('./src/routes/message');
 // const authenticateUser = require('./src/middleware/authentication');
 
 app.use('/api/v1/auth', authRouter);
@@ -46,6 +53,8 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/transactions', transactionRouter);
 app.use('/api/v1/mail', sendMailRouter);
 app.use('/api/v1/notifications', notificationRouter);
+app.use('/api/v1/conversation', conversationRouter);
+app.use('/api/v1/message', messageRouter);
 
 ////////////////// run
 const port = process.env.PORT || 5000;
