@@ -107,7 +107,8 @@ const createProduct = async (req, res) => {
                 await img.mv(imagePath);
 
                 // set cho avatar cái link để lưu vào db
-                const url = `http://${process.env.HOST_NAME}:${process.env.PORT}/uploads/products/${img.name}`;
+                // const url = `http://${process.env.HOST_NAME}:${process.env.PORT}/uploads/products/${img.name}`;
+                const url = `http://${process.env.HOST_NAME}/uploads/products/${img.name}`;
                 images_url.push(url);
             }
             req.body.images_url = images_url.join(',');
