@@ -33,7 +33,10 @@ const closeConversations = async (req, res) => {
 const getConversationsByUser = async (req, res) => {
     try {
         const { userName } = req.user;
-        const conversations = await Conversation.find({ members: { $in: userName }, isOpen: true });
+        const conversations = await Conversation.find({
+            members: { $in: userName },
+            isOpen: true,
+        }).sort({ createdAt: 'DESC' });
         console.log(conversations);
         res.status(StatusCodes.OK).json({ conversations });
     } catch (err) {

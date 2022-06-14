@@ -64,8 +64,8 @@ const updateUser = async (req, res) => {
             await file_avatar.mv(imagePath);
 
             // set cho avatar cái link để lưu vào db
-            // req.body.avatar = `http://${process.env.HOST_NAME}:${process.env.PORT}/uploads/avatar/${file_avatar.name}`;
-            req.body.avatar = `http://${process.env.HOST_NAME}/uploads/avatar/${file_avatar.name}`;
+            req.body.avatar = `http://${process.env.HOST_NAME}:${process.env.PORT}/uploads/avatar/${file_avatar.name}`;
+            // req.body.avatar = `http://${process.env.HOST_NAME}/uploads/avatar/${file_avatar.name}`;
         }
 
         const { userId, userName } = req.user;

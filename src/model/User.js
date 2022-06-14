@@ -55,7 +55,7 @@ UserSchema.methods.comparePassword = async function (canditatePassword) {
 //tạo JWT
 UserSchema.methods.createJWT = function () {
     return jwt.sign({ userId: this._id, userName: this.username }, process.env.JWT_SECRET, {
-        expiresIn: '7d',
+        expiresIn: process.env.EXPIRES_IN,
     });
 };
 

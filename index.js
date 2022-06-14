@@ -44,6 +44,7 @@ const sendMailRouter = require('./src/routes/send-mail');
 const notificationRouter = require('./src/routes/notification');
 const conversationRouter = require('./src/routes/conversation');
 const messageRouter = require('./src/routes/message');
+const deliveryRouter = require('./src/routes/delivery');
 // const authenticateUser = require('./src/middleware/authentication');
 
 app.use('/api/v1/auth', authRouter);
@@ -55,6 +56,7 @@ app.use('/api/v1/mail', sendMailRouter);
 app.use('/api/v1/notifications', notificationRouter);
 app.use('/api/v1/conversation', conversationRouter);
 app.use('/api/v1/message', messageRouter);
+app.use('/api/v1/delivery', deliveryRouter);
 
 ////////////////// run
 const port = process.env.PORT || 5000;
