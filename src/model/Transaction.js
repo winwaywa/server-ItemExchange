@@ -9,7 +9,7 @@ const TransactionSchema = new mongoose.Schema(
             ref: 'Product',
             required: [true, 'Please provide product id'],
         },
-        exchange_value: String,
+        exchange_value: { type: String, default: '0' },
         status: {
             type: String,
             enum: ['pending', 'cancelled', 'approved', 'completed'],

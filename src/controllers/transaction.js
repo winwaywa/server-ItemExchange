@@ -62,11 +62,9 @@ const findAndUpdateTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
     try {
-        const transaction = await Transaction.deleteMany(req.query);
-        if (!transaction) {
-            throw new NotFoundError(`Delete fail !`);
-        }
-        res.status(StatusCodes.OK).json({ transaction });
+        const transactions = await Transaction.find(req.query);
+        await Transaction.deleteMany(req.query);
+        res.status(StatusCodes.OK).json({ transactions });
     } catch (err) {
         res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
     }

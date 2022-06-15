@@ -13,7 +13,7 @@ const ProductSchema = new mongoose.Schema(
         images_url: { type: String, default: 'https://via.placeholder.com/444' },
         status: {
             type: String,
-            enum: ['disable', 'enable', 'exchanging', 'exchanged'],
+            enum: ['deleted', 'disable', 'enable', 'exchanging', 'exchanged'],
             default: 'disable',
         },
         category_id: {
