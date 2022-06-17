@@ -26,6 +26,7 @@ const sendMailNotification = async (req, res) => {
         const myAccessTokenObject = await myOAuth2Client.getAccessToken();
         // Access Token sẽ nằm trong property 'token' trong Object mà chúng ta vừa get được ở trên
         const myAccessToken = myAccessTokenObject?.token;
+
         // Tạo một biến Transport từ Nodemailer với đầy đủ cấu hình, dùng để gọi hành động gửi mail
         const transport = nodemailer.createTransport({
             service: 'gmail',

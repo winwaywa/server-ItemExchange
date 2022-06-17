@@ -36,8 +36,7 @@ const getConversationsByUser = async (req, res) => {
         const conversations = await Conversation.find({
             members: { $in: userName },
             isOpen: true,
-        }).sort({ createdAt: 'DESC' });
-        console.log(conversations);
+        }).sort({ updatedAt: 'DESC' });
         res.status(StatusCodes.OK).json({ conversations });
     } catch (err) {
         res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
